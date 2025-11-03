@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nala AI - Edukasi Mental Health</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-emerald-50 to-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+    <h1 class="font-bold text-emerald-600 text-lg">Nala Edukasi</h1>
+    <div class="space-x-4 text-sm text-slate-600">
+      <a href="web.html" class="hover:text-emerald-500">Beranda</a>
+      <a href="chat.html" class="hover:text-emerald-500">NalaAI</a>
+      <a href="mood-tracker.html" class="hover:text-emerald-500">Mood Tracker</a>
+      <a href="relaksasi.html" class="hover:text-emerald-500">Relaksasi</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1 px-6 py-12 md:px-12 max-w-5xl mx-auto space-y-12">
+
+    <!-- Header -->
+    <header class="text-center">
+      <h2 class="text-3xl font-bold text-emerald-700 mb-2">Edukasi Kesehatan Mental 🌿</h2>
+      <p class="text-slate-600 text-sm">Perluas wawasanmu lewat artikel, tips psikologi, dan aktivitas positif</p>
+    </header>
+
+    <!-- Artikel Singkat -->
+    <section>
+      <h3 class="text-xl font-semibold text-emerald-600 mb-4">Artikel Singkat Berbasis Riset</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <article class="bg-white p-5 rounded-2xl shadow hover:shadow-md transition">
+          <h4 class="font-semibold text-lg mb-2">Bagaimana Pikiran Negatif Terbentuk</h4>
+          <p class="text-slate-600 text-sm mb-3">Pikiran negatif sering kali muncul sebagai respon otomatis dari stres. Dengan mengenali pola pikir ini, kita bisa menggantinya dengan sudut pandang yang lebih sehat.</p>
+          <a href="https://www.simply-psychology.org/pikiran-negatif-penyebab-dan-cara-mengatasinya/" class="text-emerald-500 font-semibold text-sm hover:underline">Baca selengkapnya →</a>
+        </article>
+        <article class="bg-white p-5 rounded-2xl shadow hover:shadow-md transition">
+          <h4 class="font-semibold text-lg mb-2">Dampak Tidur terhadap Kesehatan Mental</h4>
+          <p class="text-slate-600 text-sm mb-3">Tidur yang cukup membantu menstabilkan suasana hati dan menurunkan risiko kecemasan. Prioritaskan pola tidur yang teratur untuk menjaga keseimbangan mental.</p>
+          <a href="https://keslan.kemkes.go.id/view_artikel/1674/kurang-tidur-dapat-mempengaruhi-kesehatan-mental" class="text-emerald-500 font-semibold text-sm hover:underline">Baca selengkapnya →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tips Harian -->
+    <section>
+      <h3 class="text-xl font-semibold text-emerald-600 mb-4"> Tips Harian Menjaga Keseimbangan Diri</h3>
+      <div class="bg-white p-6 rounded-2xl shadow text-center">
+        <p id="dailyTip" class="text-slate-700 text-lg italic mb-4">Klik tombol di bawah untuk mendapatkan tips hari ini 💡</p>
+        <button onclick="showTip()" class="bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition">Tampilkan Tips</button>
+      </div>
+    </section>
+
+    <!-- Aktivitas Positif -->
+    <section>
+      <h3 class="text-xl font-semibold text-emerald-600 mb-4"> Aktivitas Positif untuk Hari Ini</h3>
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <ul id="activityList" class="list-disc list-inside text-slate-700 space-y-2">
+          <li>Jalan kaki santai di luar ruangan 🍃</li>
+          <li>Menulis 3 hal yang kamu syukuri hari ini ✍️</li>
+          <li>Mendengarkan musik yang membuatmu tenang 🎵</li>
+        </ul>
+        <button onclick="addActivity()" class="mt-4 bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition">Tambah Aktivitas</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-slate-500 text-sm">
+    ©️ 2025 Nala AI | Edukasi Mental Health
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // --- Tips Harian ---
+    const tips = [
+      "Luangkan 10 menit untuk meditasi ringan di pagi hari ☀️",
+      "Jauhkan diri dari ponsel selama 1 jam sebelum tidur 😴",
+      "Berbagi cerita dengan teman yang kamu percaya 🤝",
+      "Minum air putih dan istirahat sejenak setiap 2 jam 💧",
+      "Tulis satu hal baik tentang dirimu hari ini 💌"
+    ];
+
+    function showTip() {
+      const tip = tips[Math.floor(Math.random() * tips.length)];
+      document.getElementById("dailyTip").textContent = `"${tip}"`;
+    }
+
+    // --- Aktivitas Positif ---
+    const newActivities = [
+      "Mencoba resep baru 🍲",
+      "Mendengarkan podcast inspiratif 🎧",
+      "Merapikan kamar untuk kenyamanan 🌸",
+      "Menonton film yang membuatmu tertawa 😂",
+      "Menulis surat untuk dirimu sendiri 💬"
+    ];
+
+    function addActivity() {
+      const list = document.getElementById("activityList");
+      const item = document.createElement("li");
+      const random = newActivities[Math.floor(Math.random() * newActivities.length)];
+      item.textContent = random;
+      list.appendChild(item);
+    }
+  </script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

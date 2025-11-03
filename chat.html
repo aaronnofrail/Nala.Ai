@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nala AI - Chat Empatik</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-indigo-50 to-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+    <h1 class="font-bold text-indigo-600 text-lg"> NalaAI </h1>
+    <div class="space-x-4 text-sm text-slate-600">
+      <a href="web.html" class="hover:text-indigo-500">Beranda</a>
+      <a href="mood-tracker.html" class="hover:text-indigo-500">Mood Tracker</a>
+      <a href="relaksasi.html" class="hover:text-indigo-500">Relaksasi</a>
+      <a href="edukasi.html" class="hover:text-indigo-500">Edukasi</a>
+    </div>
+  </nav>
+
+  <!-- Container Chat -->
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10">
+    <div class="w-full max-w-2xl bg-white rounded-3xl shadow-lg p-6 flex flex-col h-[70vh]">
+
+      <!-- Header Chat -->
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <h2 class="text-xl font-semibold text-indigo-700">NalaAI</h2>
+      </div>
+
+      <!-- Area Chat -->
+      <div id="chatArea" class="flex-1 overflow-y-auto space-y-3 text-sm text-slate-700 p-2">
+        <div class="text-center text-slate-400 mt-10">AI siap mendengarkan kamu 🌿</div>
+      </div>
+
+      <!-- Input Pesan -->
+      <div class="mt-4 flex gap-2">
+        <input id="userInput" type="text" placeholder="Ketik pesanmu di sini..." 
+          class="flex-1 border border-slate-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none">
+        <button onclick="sendMessage()" class="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition">Kirim</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-slate-500 text-sm">
+    ©️ 2025 Nala AI | Chat Empatik
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const chatArea = document.getElementById('chatArea');
+    const input = document.getElementById('userInput');
+
+    // Kirim Pesan
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      // Tampilkan pesan pengguna
+      const userMsg = document.createElement('div');
+      userMsg.className = "text-right";
+      userMsg.innerHTML = `<div class='inline-block bg-indigo-100 text-indigo-800 px-3 py-2 rounded-xl my-1'>${text}</div>`;
+      chatArea.appendChild(userMsg);
+      input.value = "";
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // Simulasi balasan AI
+      setTimeout(() => {
+        const aiResponse = getAIResponse(text);
+        const aiMsg = document.createElement('div');
+        aiMsg.className = "text-left";
+        aiMsg.innerHTML = `<div class='inline-block bg-slate-100 px-3 py-2 rounded-xl my-1'>${aiResponse}</div>`;
+        chatArea.appendChild(aiMsg);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, 600);
+    }
+
+    // Respon AI Empatik Sederhana
+    function getAIResponse(text) {
+      const lower = text.toLowerCase();
+      if (lower.includes("sedih") || lower.includes("capek")) {
+        return "Aku turut merasakan itu 💙 Kadang wajar banget merasa lelah. Mau aku bantu latihan napas atau afirmasi positif?";
+      } else if (lower.includes("senang") || lower.includes("bahagia")) {
+        return "Wah, aku ikut senang dengarnya 😄 Yuk, tulis hal yang kamu syukuri hari ini.";
+      } else if (lower.includes("sendiri")) {
+        return "Kamu gak sendiri 🌿 Aku di sini buat dengerin kamu. Ceritakan aja, gak apa-apa ya?";
+      } else {
+        return "Terima kasih sudah berbagi 💬 Aku di sini untuk mendengarkanmu tanpa menghakimi.";
+      }
+    }
+  </script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

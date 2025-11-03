@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nala AI - Pelacak Suasana Hati</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-b from-pink-50 to-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+    <h1 class="font-bold text-pink-600 text-lg">Nala Mood Tracker</h1>
+    <div class="space-x-4 text-sm text-slate-600">
+      <a href="web.html" class="hover:text-pink-500">Beranda</a>
+      <a href="chat.html" class="hover:text-pink-500">Nala AI</a>
+      <a href="relaksasi.html" class="hover:text-pink-500">Relaksasi</a>
+      <a href="edukasi.html" class="hover:text-pink-500">Edukasi</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10">
+    <div class="w-full max-w-3xl bg-white rounded-3xl shadow-lg p-6">
+
+      <!-- Header -->
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-semibold text-pink-700">Pelacak Suasana Hati</h2>
+        <p class="text-slate-500 text-sm mt-1">Catat suasana hatimu dan lihat perkembangannya dari waktu ke waktu</p>
+      </div>
+
+      <!-- Mood Input -->
+      <div class="flex flex-col sm:flex-row gap-3 items-center justify-center mb-6">
+        <select id="moodSelect" class="border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400">
+          <option value="">Pilih suasana hati...</option>
+          <option value="Senang">😊 Senang</option>
+          <option value="Tenang">🌿 Tenang</option>
+          <option value="Netral">😐 Netral</option>
+          <option value="Sedih">😢 Sedih</option>
+          <option value="Cemas">😟 Cemas</option>
+        </select>
+        <input id="moodNote" type="text" placeholder="Catatan singkat (opsional)" 
+          class="flex-grow border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400">
+        <button onclick="saveMood()" class="bg-pink-500 text-white px-5 py-2 rounded-lg hover:bg-pink-600 transition">Simpan</button>
+      </div>
+
+      <!-- Grafik Mood -->
+      <div class="my-6">
+        <canvas id="moodChart" height="150"></canvas>
+      </div>
+
+      <!-- Riwayat Mood -->
+      <div>
+        <h3 class="text-lg font-semibold text-pink-700 mb-3">Riwayat Mood 📖</h3>
+        <ul id="moodHistory" class="space-y-2 text-sm text-slate-700 max-h-40 overflow-y-auto border rounded-lg p-3 bg-slate-50"></ul>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-slate-500 text-sm">
+    ©️ 2025 Nala AI | Mood Tracker
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const moodHistoryEl = document.getElementById('moodHistory');
+    const ctx = document.getElementById('moodChart').getContext('2d');
+    let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+
+    // Chart.js instance
+    const moodChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: moodData.map(m => m.date),
+        datasets: [{
+          label: 'Mood Score',
+          data: moodData.map(m => moodToScore(m.mood)),
+          borderColor: '#ec4899',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: {
+          y: { min: 0, max: 5, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+
+    // Simpan mood ke localStorage
+    function saveMood() {
+      const mood = document.getElementById('moodSelect').value;
+      const note = document.getElementById('moodNote').value.trim();
+      if (!mood) return alert('Pilih suasana hati dulu ya 💭');
+
+      const date = new Date().toLocaleDateString('id-ID');
+      const entry = { date, mood, note };
+      moodData.push(entry);
+      localStorage.setItem('moodData', JSON.stringify(moodData));
+
+      updateUI();
+    }
+
+    // Update tampilan riwayat dan grafik
+    function updateUI() {
+      moodHistoryEl.innerHTML = moodData.map(m => `
+        <li class="border-b pb-1">${m.date} - <strong>${m.mood}</strong> 
+          ${m.note ? `: <em>${m.note}</em>` : ''}</li>`).join('');
+
+      moodChart.data.labels = moodData.map(m => m.date);
+      moodChart.data.datasets[0].data = moodData.map(m => moodToScore(m.mood));
+      moodChart.update();
+    }
+
+    // Konversi mood ke skor numerik
+    function moodToScore(mood) {
+      switch (mood) {
+        case 'Senang': return 5;
+        case 'Tenang': return 4;
+        case 'Netral': return 3;
+        case 'Cemas': return 2;
+        case 'Sedih': return 1;
+        default: return 0;
+      }
+    }
+
+    updateUI();
+  </script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

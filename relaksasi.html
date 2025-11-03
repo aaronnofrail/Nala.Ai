@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nala AI - Relaksasi & Mindfulness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+    <h1 class="font-bold text-blue-600 text-lg">🌿 Nala Relaksasi</h1>
+    <div class="space-x-4 text-sm text-slate-600">
+      <a href="web.html" class="hover:text-blue-500">Beranda</a>
+      <a href="chat.html" class="hover:text-blue-500">Nala AI</a>
+      <a href="mood-tracker.html" class="hover:text-blue-500">Mood Tracker</a>
+      <a href="edukasi.html" class="hover:text-blue-500">Edukasi</a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10">
+    <div class="w-full max-w-3xl bg-white rounded-3xl shadow-lg p-6 space-y-8">
+
+      <!-- Judul -->
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-blue-700">Relaksasi & Mindfulness 🌸</h2>
+        <p class="text-slate-500 text-sm mt-1">Tenangkan diri dengan latihan napas, afirmasi positif, dan audio meditasi</p>
+      </div>
+
+      <!-- Latihan Napas -->
+      <section class="text-center space-y-3">
+        <h3 class="text-lg font-semibold text-blue-600">🧘 Latihan Napas 5 Menit</h3>
+        <p class="text-slate-600 text-sm">Ikuti lingkaran ini — tarik napas saat membesar, hembuskan saat mengecil</p>
+        <div id="breathCircle" class="mx-auto mt-4 w-32 h-32 bg-blue-200 rounded-full"></div>
+        <button onclick="startBreathing()" class="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition">Mulai</button>
+        <p id="timerText" class="text-slate-500 text-sm mt-2"></p>
+      </section>
+
+      <hr class="border-t border-slate-200">
+
+      <!-- Afirmasi Harian -->
+      <section class="text-center space-y-3">
+        <h3 class="text-lg font-semibold text-blue-600">💬 Afirmasi Positif</h3>
+        <p id="affirmation" class="italic text-slate-700 text-lg">Klik tombol di bawah untuk mendapatkan afirmasi harianmu 🌤️</p>
+        <button onclick="showAffirmation()" class="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition">Tampilkan Afirmasi</button>
+      </section>
+
+      <hr class="border-t border-slate-200">
+
+      <!-- Audio Relaksasi -->
+      <section class="text-center space-y-3">
+        <h3 class="text-lg font-semibold text-blue-600">🎧 Audio Relaksasi</h3>
+        <p class="text-slate-600 text-sm">Dengarkan musik lembut untuk menenangkan pikiranmu</p>
+        <audio id="relaxAudio" controls class="mx-auto w-full max-w-md mt-2 rounded-lg">
+          <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2c7b9a9c3f.mp3?filename=relaxing-music-11774.mp3" type="audio/mp3">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-slate-500 text-sm">
+    ©️ 2025 Nala AI | Relaksasi & Mindfulness
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // --- Latihan Napas ---
+    let breathing = false;
+    const circle = document.getElementById('breathCircle');
+    const timerText = document.getElementById('timerText');
+
+    function startBreathing() {
+      if (breathing) return;
+      breathing = true;
+      let seconds = 300; // 5 menit
+      timerText.textContent = "Latihan dimulai... Tarik napas perlahan 🌬️";
+
+      const interval = setInterval(() => {
+        seconds--;
+        const minutesLeft = Math.floor(seconds / 60);
+        const secLeft = seconds % 60;
+        timerText.textContent = `Waktu tersisa: ${minutesLeft}:${secLeft.toString().padStart(2, '0')}`;
+
+        circle.animate([
+          { transform: "scale(1)" },
+          { transform: "scale(1.4)" },
+          { transform: "scale(1)" }
+        ], {
+          duration: 4000,
+          iterations: 1,
+        });
+
+        if (seconds <= 0) {
+          clearInterval(interval);
+          timerText.textContent = "Selesai! 🌿 Kamu sudah lebih tenang.";
+          breathing = false;
+        }
+      }, 4000);
+    }
+
+    // --- Afirmasi Positif ---
+    const affirmations = [
+      "Aku cukup, apa adanya diriku.",
+      "Hari ini aku memilih untuk tenang dan bersyukur.",
+      "Aku mengizinkan diriku untuk istirahat dan sembuh.",
+      "Setiap napas membawaku lebih damai.",
+      "Aku kuat, meski sedang lelah."
+    ];
+
+    function showAffirmation() {
+      const random = affirmations[Math.floor(Math.random() * affirmations.length)];
+      document.getElementById("affirmation").textContent = `"${random}"`;
+    }
+  </script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

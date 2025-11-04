@@ -13,13 +13,13 @@
   </style>
 </head>
 
-<body class="bg-gradient-to-b from-indigo-50 to-white text-slate-800">
+<body id="home" class="bg-gradient-to-b from-indigo-50 to-white text-slate-800">
 
   <!-- Navbar -->
   <header class="flex justify-between items-center px-6 md:px-12 py-4 bg-white/80 backdrop-blur sticky top-0 shadow-sm z-50">
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-2 hover:cursor-pointer" onclick="window.location.href='web.html#home'">
         <h1 class="font-semibold text-lg">Nala</h1>
-      <div class="bg-indigo-500 text-white font-bold text-lg px-3 py-2 rounded-xl shadow">AI</div>
+      <div class="bg-indigo-500 text-white font-bold text-lg px-3 py-2 rounded-full shadow">AI</div>
     </div>
     <nav class="hidden md:flex space-x-6 text-sm text-slate-600">
       <a href="#fitur" class="hover:text-indigo-500">Fitur</a>
@@ -35,8 +35,8 @@
 
 
   <!-- Section -->
-  <section class="px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
-    <div class="space-y-6">
+  <section class="px-6 md:px-12 py-8 md:py-12 grid md:grid-cols-2 gap-10 items-center">
+    <div class="space-y-2">
       <p class="text-indigo-600 font-semibold uppercase tracking-wide text-sm">Teman Cerita Anda</p>
       <h2 class="text-4xl md:text-5xl font-bold leading-tight">Tenang, Kamu Tidak Sendiri </h2>
       <p class="text-slate-600 text-lg">Dapatkan dukungan emosional dari AI yang siap mendengarkan dan membantu  kapanpun kamu ingin memahami diri sendiri.</p>

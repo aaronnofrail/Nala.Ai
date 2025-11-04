@@ -38,7 +38,7 @@
       <div class="mt-4 flex gap-2">
         <input id="userInput" type="text" placeholder="Ketik pesanmu di sini..." 
           class="flex-1 border border-slate-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none">
-        <button onclick="sendMessage()" class="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition">Kirim</button>
+        <button id="saveButton" onclick="sendMessage()" class="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition">Kirim</button>
       </div>
     </div>
   </main>
@@ -52,6 +52,7 @@
   <script>
     const chatArea = document.getElementById('chatArea');
     const input = document.getElementById('userInput');
+    const saveBtn = document.getElementById("saveButton");
 
     // Kirim Pesan
     function sendMessage() {
@@ -76,6 +77,13 @@
         chatArea.scrollTop = chatArea.scrollHeight;
       }, 600);
     }
+
+    userInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // supaya tidak reload halaman
+      saveBtn.click(); // trigger klik button
+    }
+    });
 
     // Respon AI Empatik Sederhana
     function getAIResponse(text) {

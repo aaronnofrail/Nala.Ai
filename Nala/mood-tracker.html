@@ -43,7 +43,7 @@
         </select>
         <input id="moodNote" type="text" placeholder="Catatan singkat (opsional)" 
           class="flex-grow border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400">
-        <button onclick="saveMood()" class="bg-pink-500 text-white px-5 py-2 rounded-lg hover:bg-pink-600 transition">Simpan</button>
+        <button id="saveButton" onclick="saveMood()" class="bg-pink-500 text-white px-5 py-2 rounded-lg hover:bg-pink-600 transition">Simpan</button>
       </div>
 
       <!-- Grafik Mood -->
@@ -70,6 +70,8 @@
     const moodHistoryEl = document.getElementById('moodHistory');
     const ctx = document.getElementById('moodChart').getContext('2d');
     let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+
+    const saveBtn = document.getElementById("saveButton");
 
     // Chart.js instance
     const moodChart = new Chart(ctx, {
@@ -105,6 +107,13 @@
 
       updateUI();
     }
+
+    moodNote.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); 
+      saveBtn.click(); 
+    }
+  });
 
     // Update tampilan riwayat dan grafik
     function updateUI() {
